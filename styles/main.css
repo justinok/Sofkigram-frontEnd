@@ -1,0 +1,9 @@
+.single_post_container{
+    background-color: burlywood;
+    border: 2px solid black;
+}
+
+.single_comment_container{
+    background-color: rgb(156, 168, 201);
+    border: 2px solid black;
+}
