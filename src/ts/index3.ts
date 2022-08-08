@@ -1,22 +1,15 @@
 import { Ipost, Icomment} from "./models/models.js";
 
-import { getAllPostsFromBackend, sendPostToBackend} from "./requests/asyncRequests.js";
+import { getAllPostsFromBackend } from "./requests/asyncRequests.js";
 
 
-window.addEventListener('DOMContentLoaded', () => {
-    getPosts();
-})
 
-function getPosts(){
-    let posts:Ipost[];
-    getAllPostsFromBackend().then(response => {
+let posts:Ipost[];
+getAllPostsFromBackend().then(response => {
     posts = response
     materializePosts(posts);
     
 } )
-}
-
-
 
 function materializePosts(posts:Array<Ipost>){
     const divRoot = document.querySelector('#root') as
@@ -25,9 +18,6 @@ function materializePosts(posts:Array<Ipost>){
     console.log(posts)
     console.log(divRoot)
 
-}
-function sayHi(){
-    console.log("hi")
 }
 
 function renderPost(post:Ipost, divRoot:HTMLDivElement){
@@ -44,7 +34,7 @@ function renderPost(post:Ipost, divRoot:HTMLDivElement){
         <div class="options">
         <button type="button" >Leave a Comment</button>
           <button type="button" >Like</button>
-          <button type="button" >Delete</button>
+          <button type="button" >Eliminar</button>
         </div>
 
     </div>
@@ -68,41 +58,11 @@ function renderComment(comment:Icomment, postContainter:HTMLDivElement){
         <p class ="comment_message_${comment.id}">${comment.message}</p>
         <div class="options">
           <button type="button" >Like</button>
-          <button type="button" >Delete</button>
+          <button type="button" >Eliminar</button>
         </div>
     </div>
     `
     singleCommentContainer.innerHTML = singleCommentContent;
     postContainter.append(singleCommentContainer)
 }
-const postsForm: HTMLFormElement |null = document.querySelector('.post-form');
-postsForm?.addEventListener('submit', (e) => handleNewPost(e))
-function handleNewPost(e : SubmitEvent){
-    e.preventDefault();
 
-    const inputTitle = (document.getElementById("title-input") as HTMLInputElement).value
-    const inputMessage = (document.getElementById("message-input") as HTMLInputElement).value
-
-    if((inputTitle.length >= 5 && inputTitle.length <= 100)){
-        if((inputMessage.length >= 10 && inputMessage.length <= 400)){
-            
-            const newPost: Ipost = {
-              title: inputTitle,
-              message: inputMessage,
-              comments: []
-            }
-
-            sendPostToBackend(newPost).then(
-                response => {
-                  if(response.ok){
-                    window.location.reload()
-                }
-            })
-
-        } else {
-            alert("Title must be between 10 and 45 characters long!")
-        }
-    } else {
-        alert("message must be between 5 and 400 characters long!")
-    }
-}

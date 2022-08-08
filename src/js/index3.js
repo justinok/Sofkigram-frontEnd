@@ -1,22 +1,14 @@
-import { getAllPostsFromBackend, sendPostToBackend } from "./requests/asyncRequests.js";
-window.addEventListener('DOMContentLoaded', () => {
-    getPosts();
+import { getAllPostsFromBackend } from "./requests/asyncRequests.js";
+let posts;
+getAllPostsFromBackend().then(response => {
+    posts = response;
+    materializePosts(posts);
 });
-function getPosts() {
-    let posts;
-    getAllPostsFromBackend().then(response => {
-        posts = response;
-        materializePosts(posts);
-    });
-}
 function materializePosts(posts) {
     const divRoot = document.querySelector('#root');
     posts.forEach(post => renderPost(post, divRoot));
     console.log(posts);
     console.log(divRoot);
-}
-function sayHi() {
-    console.log("hi");
 }
 function renderPost(post, divRoot) {
     const singlePostContainer = document.createElement('div');
@@ -30,7 +22,7 @@ function renderPost(post, divRoot) {
         <div class="options">
         <button type="button" >Leave a Comment</button>
           <button type="button" >Like</button>
-          <button type="button" >Delete</button>
+          <button type="button" >Eliminar</button>
         </div>
 
     </div>
@@ -52,37 +44,10 @@ function renderComment(comment, postContainter) {
         <p class ="comment_message_${comment.id}">${comment.message}</p>
         <div class="options">
           <button type="button" >Like</button>
-          <button type="button" >Delete</button>
+          <button type="button" >Eliminar</button>
         </div>
     </div>
     `;
     singleCommentContainer.innerHTML = singleCommentContent;
     postContainter.append(singleCommentContainer);
-}
-const postsForm = document.querySelector('.post-form');
-postsForm === null || postsForm === void 0 ? void 0 : postsForm.addEventListener('submit', (e) => handleNewPost(e));
-function handleNewPost(e) {
-    e.preventDefault();
-    const inputTitle = document.getElementById("title-input").value;
-    const inputMessage = document.getElementById("message-input").value;
-    if ((inputTitle.length >= 5 && inputTitle.length <= 100)) {
-        if ((inputMessage.length >= 10 && inputMessage.length <= 400)) {
-            const newPost = {
-                title: inputTitle,
-                message: inputMessage,
-                comments: []
-            };
-            sendPostToBackend(newPost).then(response => {
-                if (response.ok) {
-                    window.location.reload();
-                }
-            });
-        }
-        else {
-            alert("Title must be between 10 and 45 characters long!");
-        }
-    }
-    else {
-        alert("message must be between 5 and 400 characters long!");
-    }
 }

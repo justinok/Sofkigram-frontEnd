@@ -14,7 +14,39 @@ export function getAllPostsFromBackend() {
         return posts;
     });
 }
-export function createPost() {
+export function sendPostToBackend(post) {
     return __awaiter(this, void 0, void 0, function* () {
+        fetch('http://localhost:8080/post/create/post', {
+            method: 'POST',
+            body: JSON.stringify(post),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(res => res.json())
+            .catch(error => {
+            console.log('error', error);
+        })
+            .then(response => {
+            console.log('success', response.message);
+        });
+    });
+}
+export function sendCommentToBackend(comment) {
+    return __awaiter(this, void 0, void 0, function* () {
+        fetch('http://localhost:8080/post/create/comment', {
+            method: 'POST',
+            body: JSON.stringify(comment),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(res => res.json())
+            .catch(error => {
+            console.log('error', error);
+        })
+            .then(response => {
+            console.log('success', response.message);
+        });
     });
 }
