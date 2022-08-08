@@ -8,3 +8,8 @@ export async function getAllPostsFromBackend () {
 
     return posts;
 }
+
+export async function createPost() {
+    
+    
+}

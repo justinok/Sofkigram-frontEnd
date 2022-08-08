@@ -1,5 +1,4 @@
 import { getAllPostsFromBackend } from "./requests/asyncRequests.js";
-console.log("te odio CORS");
 let posts;
 getAllPostsFromBackend().then(response => {
     posts = response;
@@ -12,7 +11,6 @@ function materializePosts(posts) {
     console.log(divRoot);
 }
 function renderPost(post, divRoot) {
-    // Ipost[]  ???
     const singlePostContainer = document.createElement('div');
     singlePostContainer.className = `single_post_container-${post.id}`;
     singlePostContainer.classList.add('single_post_container');

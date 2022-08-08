@@ -3,7 +3,7 @@ import { Ipost, Icomment} from "./models/models.js";
 import { getAllPostsFromBackend } from "./requests/asyncRequests.js";
 
 
-console.log("te odio CORS");
+
 
 let posts:Ipost[];
 getAllPostsFromBackend().then(response => {
@@ -22,7 +22,7 @@ function materializePosts(posts:Array<Ipost>){
 }
 
 function renderPost(post:Ipost, divRoot:HTMLDivElement){
-    // Ipost[]  ???
+
     
     const singlePostContainer = document.createElement('div');
     singlePostContainer.className = `single_post_container-${post.id}`
@@ -51,3 +51,6 @@ function renderComment(comment:Icomment, postContainter:HTMLDivElement){
     singleCommentContainer.innerHTML = singleCommentContent;
     postContainter.append(singleCommentContainer)
 }
+
+
+

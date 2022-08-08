@@ -14,3 +14,7 @@ export function getAllPostsFromBackend() {
         return posts;
     });
 }
+export function createPost() {
+    return __awaiter(this, void 0, void 0, function* () {
+    });
+}

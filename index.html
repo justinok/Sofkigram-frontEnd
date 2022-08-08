@@ -8,7 +8,31 @@
 </head>
 <body>
     <h1>Sofkigram Posts:</h1>
+    <button type="button" id="btnAdd">Add New Post</button>
+<div id="postsList"></div>
+<div class="modal" id="modalAdd">
+    <div class="form-content">
+        <div class="btn-close-form" onclick="closeModalAdd()">X</div>
+        <div class="form-body">
+            <form id="formAdd">
+                <div class="control">
+                    <label>Title: </label>
+                    <input type="text" name="title">
+                </div>
+                <div class="control">
+                    <label>message: </label>
+                    <input type="text" name="message">
+                </div>
+            </form>
+        </div>
+        <div class="form-footer">
+            <button type="button" onclick="closeModalAdd()">Cancel</button>
+            <button type="button" onclick="createPost()">Publish this Post</button>
+        </div>
+        <span id="msgFormAdd" class="msg-error"></span>
+    </div>
+</div>
     <div id="root"></div>
-    <script type="module" src="./src/js/index.js"></script>
+    <script type="module" src="./src/js/index2.js"></script>
 </body>
 </html>
