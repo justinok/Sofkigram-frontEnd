@@ -10,7 +10,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 export function getAllPostsFromBackend() {
     return __awaiter(this, void 0, void 0, function* () {
         const response = yield fetch('http://localhost:8080/post/');
-        const post = yield response.json;
-        return post;
+        const posts = yield response.json();
+        return posts;
     });
 }
