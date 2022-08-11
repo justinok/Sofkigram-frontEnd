@@ -47,6 +47,7 @@ export function sendCommentToBackend(comment) {
         })
             .then(response => {
             console.log('success', response.message);
+            response = 200;
         });
     });
 }

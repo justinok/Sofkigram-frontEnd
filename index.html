@@ -11,11 +11,15 @@
     <div class = "forms-container">
         <div class = editor>
             <h3 class="title-element">  Add new Post </h3>
-            <form class="specialties-form">
-                <input class="text-input" id="specialty-name-input" placeholder="Title"            type="text" required>
-                <input class="text-input" id="specialty-physician-input" placeholder="message"  type="text" required>
-                <button class="add-button" type="submit">Add</button>
+            <form class="post-form">
+                <input class="text-input" id="title-input" placeholder="Title"            type="text" required>
+                <input class="text-input" id="message-input" placeholder="message"  type="text" required>
+                <button class="add-button" type="submit">Publish</button>
             </form>
+            <form class="comment-form-">
+                <input placeholder="Comment" class="content-comment-input" type="text"/>
+                <button class="comment-form-button">Add Comment</button>
+                </form>`
         </div>
     <button type="button" id="btnAdd">Add New Post</button>
 <div id="postsList"></div>

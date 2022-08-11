@@ -44,6 +44,7 @@ export async function sendCommentToBackend(comment:Icomment[]) {
         })
         .then(response => {
             console.log('success', response.message)
+            response= 200
         }) 
 
 }
