@@ -34,7 +34,7 @@ function renderPost(post, divRoot) {
     const deleteButton = document.createElement('button');
     deleteButton.className = 'single-post-delete-button';
     deleteButton.innerText = 'Delete';
-    deleteButton.addEventListener('click', () => sayHi());
+    deleteButton.addEventListener('click', () => testalerts());
     const editButton = document.createElement('button');
     editButton.className = 'single-post-edit-button';
     editButton.innerText = 'Edit';
@@ -47,9 +47,12 @@ function renderPost(post, divRoot) {
     addForm.className = 'new-comment-form';
     addForm.innerText = 'write here your comment';
     singlePostContainer.innerHTML = singlePostContent;
-    singlePostContainer.append(editButton, deleteButton, addForm, addComment);
+    singlePostContainer.append(editButton, deleteButton);
     materializeComments(post.comments, singlePostContainer);
+    //newwwwcoment(post,singlePostContainer)
     divRoot.append(singlePostContainer);
+}
+function testalerts() {
 }
 function materializeComments(comments, postContainter) {
     comments.forEach(comment => renderComment(comment, postContainter));
@@ -111,12 +114,15 @@ function renderComment(comment, postContainter) {
     postContainter.append(singleCommentContainer);
 }
 /**
+ * try to show the fucking form
+ */
+/**
 const commentForm: HTMLFormElement |null = document.querySelector('.post-form');
 commentForm?.addEventListener('Comment', (e) => handleNewComment(e))
  */
 function handleNewComment(id) {
-    const inputComment = document.getElementById("new-comment-form").value;
-    if ((inputComment.length >= 5 && inputComment.length <= 100)) {
+    const inputComment = document.getElementById("comment-input").value;
+    if ((inputComment.length >= 3 && inputComment.length <= 400)) {
         const newComment = {
             message: inputComment,
             fkPostId: id
@@ -124,27 +130,33 @@ function handleNewComment(id) {
         sendCommentToBackend(newComment).then(response => {
             if (!response === 200) {
                 window.location.reload();
-                alert("Your Post has been created :D");
+                alert("Your Comment has been created :D");
             }
             window.location.reload();
-            alert("Your Post has been created :D");
+            alert("Your comment has been created :D");
         });
     }
     else {
-        alert("Comment must be between 10 and 45 characters long!");
+        alert("Comment must be between 5 and 45 characters long!");
     }
 }
-function newwwwcoment() {
+function newwwwcoment(post, postContainter) {
     const comment1Container = document.createElement('form');
-    //const commentContainer =document.querySelector('.form-new-comment') as HTMLFormElement;
-    comment1Container.className = 'form-new-comment-${comment.id}';
-    comment1Container.classList.add(`comment-form-`);
+    //comment1Container =document.querySelector('.form-new-comment') as HTMLFormElement;
+    const postid = post.id;
+    comment1Container.className = `form-new-comment_${post.id}`;
+    comment1Container.classList.add(`comment-form`);
     const formComment = `
-      <form class="comment-form-">
-      <input placeholder="Comment" class="content-comment-input" type="text"/>
-      <button class="comment-form-button">Add Comment</button>
+      <form class="comment-form">
+        <input class="text-input" id="comment-input" placeholder="Write your comment..."  type="text" required>
+        <button class="comment-form-button">Add Comment</button>
       </form>`;
     //commentContainer.innerHTML = formComment;
     const submitCommentButton = document.querySelector('.comment-form-button');
-    submitCommentButton.addEventListener('click', () => sayHi());
+    submitCommentButton.className = 'add-new-comment-button';
+    submitCommentButton.innerText = 'push new comment';
+    submitCommentButton.addEventListener('click', () => handleNewComment(postid));
+    comment1Container.innerHTML = formComment;
+    comment1Container.append(submitCommentButton);
+    postContainter.append(comment1Container);
 }

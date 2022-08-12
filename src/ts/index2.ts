@@ -1,6 +1,7 @@
+import { isPostfixUnaryExpression } from "../../node_modules/typescript/lib/typescript.js";
 import { Ipost, Icomment} from "./models/models.js";
 
-import { getAllPostsFromBackend, sendPostToBackend,sendCommentToBackend} from "./requests/asyncRequests.js";
+import { getAllPostsFromBackend, sendPostToBackend,sendCommentToBackend,editPostFromBackend} from "./requests/asyncRequests.js";
 
 
 window.addEventListener('DOMContentLoaded', () => {
@@ -47,11 +48,13 @@ function renderPost(post:Ipost, divRoot:HTMLDivElement){
      const deleteButton:HTMLButtonElement = document.createElement('button')
      deleteButton.className = 'single-post-delete-button'
      deleteButton.innerText = 'Delete'
-     deleteButton.addEventListener('click', ()=> sayHi())
+     deleteButton.addEventListener('click', ()=> testalerts())
      const editButton:HTMLButtonElement = document.createElement('button')
      editButton.className = 'single-post-edit-button'
      editButton.innerText = 'Edit'
      editButton.addEventListener('click', ()=> sayHi())
+
+
      const addComment:HTMLButtonElement = document.createElement('button')
      addComment.className = 'single-post-addComment-button'
      addComment.innerText = 'Comment'
@@ -65,9 +68,13 @@ function renderPost(post:Ipost, divRoot:HTMLDivElement){
 
 
      singlePostContainer.innerHTML = singlePostContent;
-     singlePostContainer.append(editButton,  deleteButton, addForm,addComment)
+     singlePostContainer.append(editButton,  deleteButton)
      materializeComments(post.comments, singlePostContainer)
+     //newwwwcoment(post,singlePostContainer)
      divRoot.append(singlePostContainer)
+}
+
+function testalerts(){
 }
 
 function materializeComments(comments:Icomment[], postContainter:HTMLDivElement ){
@@ -142,7 +149,9 @@ function handleNewPost(e : SubmitEvent){
 }
 
 
-
+/**
+ * try to show the fucking form
+ */
 
 
 /** 
@@ -152,10 +161,10 @@ commentForm?.addEventListener('Comment', (e) => handleNewComment(e))
 
 
 function handleNewComment(id:number){
+    
+    const inputComment = (document.getElementById("comment-input") as HTMLInputElement).value
 
-    const inputComment = (document.getElementById("new-comment-form") as HTMLInputElement).value
-
-    if((inputComment.length >= 5 && inputComment.length <= 100)){
+    if((inputComment.length >= 3 && inputComment.length <= 400)){
             
             const newComment: Icomment = {
               message: inputComment,
@@ -166,31 +175,43 @@ function handleNewComment(id:number){
                 response => {
                   if(!response === 200){
                     window.location.reload()
-                    alert("Your Post has been created :D" )
+                    alert("Your Comment has been created :D" )
                 }
                 window.location.reload()
-                alert("Your Post has been created :D" )
+                alert("Your comment has been created :D" )
             })
 
         } else {
-            alert("Comment must be between 10 and 45 characters long!" )
+            alert("Comment must be between 5 and 45 characters long!" )
         }
 }
 
-function newwwwcoment(){
+function newwwwcoment(post:Ipost, postContainter:HTMLDivElement){
     const comment1Container:HTMLFormElement = document.createElement('form')
-    //const commentContainer =document.querySelector('.form-new-comment') as HTMLFormElement;
-    comment1Container.className='form-new-comment-${comment.id}'
-    comment1Container.classList.add(`comment-form-`)
+    //comment1Container =document.querySelector('.form-new-comment') as HTMLFormElement;
+    const postid= post.id
+    comment1Container.className = `form-new-comment_${post.id}`
+
+    comment1Container.classList.add(`comment-form`)
     const formComment:string = `
-      <form class="comment-form-">
-      <input placeholder="Comment" class="content-comment-input" type="text"/>
-      <button class="comment-form-button">Add Comment</button>
+      <form class="comment-form">
+        <input class="text-input" id="comment-input" placeholder="Write your comment..."  type="text" required>
+        <button class="comment-form-button">Add Comment</button>
       </form>`
     //commentContainer.innerHTML = formComment;
+
     const submitCommentButton = document.querySelector('.comment-form-button') as HTMLButtonElement
-    submitCommentButton.addEventListener('click', ()=> sayHi())
+    submitCommentButton.className = 'add-new-comment-button'
+    submitCommentButton.innerText = 'push new comment'
+    submitCommentButton.addEventListener('click', ()=> handleNewComment(postid))
+
+    comment1Container.innerHTML = formComment;
+   
+    comment1Container.append(submitCommentButton)
+    postContainter.append(comment1Container)
 }
+
+
 
 
 

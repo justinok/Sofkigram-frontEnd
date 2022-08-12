@@ -29,7 +29,20 @@ export async function sendPostToBackend(post:Ipost) {
     
 }
 
-export async function sendCommentToBackend(comment:Icomment[]) {
+export async function editPostFromBackend(post:PostI){
+    const response:Response = await fetch('http://localhost:8080/update/post', 
+    {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json' 
+      },
+      body: JSON.stringify(post)
+    })
+
+    return response;
+  }
+
+export async function sendCommentToBackend(comment:Icomment) {
 
     fetch('http://localhost:8080/post/create/comment', {
         method: 'POST',

@@ -32,6 +32,18 @@ export function sendPostToBackend(post) {
         });
     });
 }
+export function editPostFromBackend(post) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const response = yield fetch('http://localhost:8080/update/post', {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(post)
+        });
+        return response;
+    });
+}
 export function sendCommentToBackend(comment) {
     return __awaiter(this, void 0, void 0, function* () {
         fetch('http://localhost:8080/post/create/comment', {
